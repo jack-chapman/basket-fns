@@ -1,7 +1,7 @@
 {
-  "name": "basket",
-  "version": "0.0.0",
-  "description": "Functional eCommerce basket",
+  "name": "basket-fns",
+  "version": "0.1.0",
+  "description": "Immutable Functional eCommerce basket",
   "publishConfig": {
     "access": "public"
   },

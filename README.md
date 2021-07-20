@@ -1,3 +1,3 @@
-# Basket fn
+# basket-fns
 
-eCommerce basket/shopping cart implemented as functional TypeScript
+Functional eCommerce basket or shopping cart
