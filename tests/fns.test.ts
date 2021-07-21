@@ -1,12 +1,12 @@
 import {
   addItem,
-  Basket,
+  IBasket,
   clearItem,
   containsItem,
   countItem,
   createBasket,
-  Item,
-  Row,
+  IBasketItem,
+  IRow,
   subItem,
   sumItem,
   sumValue,
@@ -16,17 +16,15 @@ const randomId = () => {
   return Math.random().toString(36).substr(2, 9)
 }
 
-const makeItem = (): Item => {
+const makeItem = (): IBasketItem => {
   return {
-    name: 'foo',
     id: '123',
     value: 10,
   }
 }
 
-const randomItem = (): Item => {
+const randomItem = (): IBasketItem => {
   return {
-    name: 'foo',
     id: randomId(),
     value: 10,
   }
@@ -36,7 +34,7 @@ describe('createBasket', () => {
   it('creates a valid basket', () => {
     const basket = createBasket()
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [],
     }
 
@@ -44,14 +42,14 @@ describe('createBasket', () => {
   })
 
   it('creates a basket with predefined rows', () => {
-    const rows: Row[] = [
+    const rows: IRow[] = [
       {
-        item: { name: 'foo', id: 'abc', value: 10 },
+        item: { id: 'abc', value: 10 },
         quantity: 1,
       },
     ]
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows,
     }
 
@@ -65,15 +63,14 @@ describe('addItem', () => {
   it('Adds an item to an empty basket', () => {
     const basket = createBasket()
 
-    const item: Item = {
+    const item: IBasketItem = {
       id: randomId(),
-      name: 'foo',
       value: 10,
     }
 
     const updated = addItem(basket, item)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item,
@@ -88,15 +85,14 @@ describe('addItem', () => {
   it('Adds 5 of an item to an empty basket', () => {
     const basket = createBasket()
 
-    const item: Item = {
+    const item: IBasketItem = {
       id: randomId(),
-      name: 'foo',
       value: 10,
     }
 
     const updated = addItem(basket, item, 5)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item,
@@ -117,15 +113,14 @@ describe('addItem', () => {
       },
     ])
 
-    const item: Item = {
+    const item: IBasketItem = {
       id: randomId(),
-      name: 'foo',
       value: 10,
     }
 
     const updated = addItem(basket, item)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item: existingItem,
@@ -150,15 +145,14 @@ describe('addItem', () => {
       },
     ])
 
-    const item: Item = {
+    const item: IBasketItem = {
       id: randomId(),
-      name: 'foo',
       value: 10,
     }
 
     const updated = addItem(basket, item, 5)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item: existingItem,
@@ -185,7 +179,7 @@ describe('addItem', () => {
 
     const updated = addItem(basket, existingItem)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item: existingItem,
@@ -208,7 +202,7 @@ describe('addItem', () => {
 
     const updated = addItem(basket, existingItem, 5)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item: existingItem,
@@ -225,15 +219,14 @@ describe('subItem', () => {
   it('Subs an item from an empty basket', () => {
     const basket = createBasket()
 
-    const item: Item = {
+    const item: IBasketItem = {
       id: randomId(),
-      name: 'foo',
       value: 10,
     }
 
     const updated = subItem(basket, item)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [],
     }
 
@@ -243,15 +236,14 @@ describe('subItem', () => {
   it('Subs 5 of an item from an empty basket', () => {
     const basket = createBasket()
 
-    const item: Item = {
+    const item: IBasketItem = {
       id: randomId(),
-      name: 'foo',
       value: 10,
     }
 
     const updated = subItem(basket, item, 5)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [],
     }
 
@@ -269,7 +261,7 @@ describe('subItem', () => {
 
     const updated = subItem(basket, existingItem)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item: existingItem,
@@ -292,7 +284,7 @@ describe('subItem', () => {
 
     const updated = subItem(basket, existingItem, 5)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item: existingItem,
@@ -320,7 +312,7 @@ describe('subItem', () => {
 
     const updated = subItem(basket, existingItemA)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item: existingItemA,
@@ -352,7 +344,7 @@ describe('subItem', () => {
 
     const updated = subItem(basket, existingItemA, 5)
 
-    const expected: Basket = {
+    const expected: IBasket = {
       rows: [
         {
           item: existingItemA,
@@ -380,7 +372,7 @@ describe('subItem', () => {
 
       const updated = subItem(basket, existingItem)
 
-      const expected: Basket = {
+      const expected: IBasket = {
         rows: [],
       }
 
@@ -397,7 +389,7 @@ describe('subItem', () => {
 
       const updated = subItem(basket, existingItem, 5)
 
-      const expected: Basket = {
+      const expected: IBasket = {
         rows: [],
       }
 
@@ -419,7 +411,7 @@ describe('subItem', () => {
 
       const updated = subItem(basket, existingItemA)
 
-      const expected: Basket = {
+      const expected: IBasket = {
         rows: [
           {
             item: existingItemB,
@@ -446,7 +438,7 @@ describe('subItem', () => {
 
       const updated = subItem(basket, existingItemA, 5)
 
-      const expected: Basket = {
+      const expected: IBasket = {
         rows: [
           {
             item: existingItemB,
@@ -464,7 +456,7 @@ describe('containsItem', () => {
   it('returns true when it finds an item', () => {
     const item = makeItem()
 
-    const row: Row = {
+    const row: IRow = {
       item,
       quantity: 1,
     }

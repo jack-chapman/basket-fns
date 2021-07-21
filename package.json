@@ -1,5 +1,5 @@
 {
-  "name": "basket-fns",
+  "name": "@chapm/basket-fns",
   "version": "0.1.0",
   "description": "Immutable Functional eCommerce basket",
   "publishConfig": {
